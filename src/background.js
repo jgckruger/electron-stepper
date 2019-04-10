@@ -1,5 +1,5 @@
 'use strict'
-
+const { ipcMain } = require('electron')
 import { app, protocol, BrowserWindow } from 'electron'
 import {
   createProtocol,
@@ -78,3 +78,11 @@ if (isDevelopment) {
     })
   }
 }
+
+ipcMain.on('configEsp', (event, arg) => {
+  
+
+
+
+  event.returnValue = true
+})

@@ -2,10 +2,13 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> | 
+      <router-link to="/command">Command</router-link> |
       <router-link to="/config">Config</router-link>
     </div>
     <router-view/>
+    <div style="position: fixed; bottom: 50px; width:100%;" flex>
+      <div style="display:flex;justify-content:center;align-items:flex-end;">Alunos: João Gabriel Corrêa Krüger e Luiz Otávio Oyama</div>
+    </div>
   </div>
 </template>
 

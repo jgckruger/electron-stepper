@@ -6,7 +6,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-import 'vue-material/dist/theme/default-dark.css' // This line here
+//import 'vue-material/dist/theme/default-dark.css' // This line here
 Vue.use(VueMaterial)
 
 
