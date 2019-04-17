@@ -6,7 +6,6 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-//const serialport = require('serialport')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +16,7 @@ protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600 })
-
+  
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -27,7 +26,7 @@ function createWindow () {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
+  
   win.on('closed', () => {
     win = null
   })
@@ -80,9 +79,35 @@ if (isDevelopment) {
   }
 }
 
+// Serial port
+const SerialPort = require('serialport')
+var Readline = SerialPort.parsers.Readline
+
+var serialPort = new SerialPort('COM4', {
+  baudRate: 9600
+})
+var parser = new Readline()
+serialPort.pipe(parser)
+
+serialPort.on('open', function () {
+  // console.log('Communication is on!')
+})
+
 ipcMain.on('configEsp', (event, arg) => {
+  serialPort.write('ROBOT POWER ON')
+  parser.on('data', function (data) {
+    // console.log('data received: ' + data)
+    event.returnValue = data
+  })
+  
+})
 
-
-
-  event.returnValue = true
+ipcMain.on('sendDistancia', (event, arg) => {
+  let comando = 'A ' + arg
+  serialPort.write(comando)
+  parser.on('data', function (data) {
+    console.log('data received: ' + data)
+    event.returnValue = data
+  })
+  
 })
